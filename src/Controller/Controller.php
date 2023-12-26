@@ -4,5 +4,5 @@ namespace Olooeez\AluraPlay\Controller;
 
 interface Controller
 {
-    public function indexAction(): void;
+  public function indexAction(): void;
 }

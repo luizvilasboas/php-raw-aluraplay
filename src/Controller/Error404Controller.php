@@ -4,8 +4,8 @@ namespace Olooeez\AluraPlay\Controller;
 
 class Error404Controller implements Controller
 {
-    public function indexAction(): void
-    {
-        http_response_code(404);
-    }
+  public function indexAction(): void
+  {
+    http_response_code(404);
+  }
 }
