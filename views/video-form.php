@@ -1,7 +1,4 @@
-<?php
-require_once(__DIR__ . "/html-begin.php")
-/** @var \Olooeez\AluraPlay\Entity\Video|null $video */
-?>
+<?php require_once(__DIR__ . "/html-begin.php") ?>
 <main class="container">
   <form class="container__formulario" method="post">
     <h2 class="formulario__titulo">Envie um vídeo!</h2>

@@ -22,8 +22,6 @@ body {
   text-align: center;
 }
 
-/* ESTILOS DO HEADER */
-
 .cabecalho {
   background-color: white;
   position: fixed;
@@ -55,8 +53,6 @@ body {
   border-radius: 10%;
   background-color: var(--azul-escuro);
 }
-
-/* ESTILOS DA SEÇÃO VÍDEOS */
 
 .videos__container {
   color: black;
