@@ -4,12 +4,11 @@ $dbPath = __DIR__ . '/banco.sqlite';
 $pdo = new PDO("sqlite:$dbPath");
 
 $id = $_GET['id'];
-$sql = 'DELETE FROM videos WHERE id = ?';
-$statement = $pdo->prepare($sql);
-$statement->bindValue(1, $id);
 
-if ($statement->execute() === false) {
+$repository = new Olooeez\AluraPlay\Repository\VideoRepository($pdo);
+
+if ($repository->remove(intval($id))) {
     header('Location: /?sucesso=0');
 } else {
-    header('Location: /?sucesso=1');
+    header('Location: /index.php?sucesso=1');
 }

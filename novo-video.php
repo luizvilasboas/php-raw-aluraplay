@@ -13,12 +13,9 @@ if ($titulo === false) {
     exit();
 }
 
-$sql = 'INSERT INTO videos (url, title) VALUES (?, ?)';
-$statement = $pdo->prepare($sql);
-$statement->bindValue(1, $url);
-$statement->bindValue(2, $titulo);
+$repository = new Olooeez\AluraPlay\Repository\VideoRepository($pdo);
 
-if ($statement->execute() === false) {
+if ($repository->add(new Olooeez\AluraPlay\Entity\Video($url, $titulo))) {
     header('Location: /?sucesso=0');
 } else {
     header('Location: /?sucesso=1');
