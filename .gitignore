@@ -1,0 +1,5 @@
+# Vendor folder for composer
+vendor/
+
+# SQlite database
+banco.sqlite
