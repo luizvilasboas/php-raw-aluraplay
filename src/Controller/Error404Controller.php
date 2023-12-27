@@ -2,10 +2,14 @@
 
 namespace Olooeez\AluraPlay\Controller;
 
+use Nyholm\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
 class Error404Controller implements Controller
 {
-  public function indexAction(): void
+  public function indexAction(RequestInterface $request): ResponseInterface
   {
-    http_response_code(404);
+    return new Response(404);
   }
 }

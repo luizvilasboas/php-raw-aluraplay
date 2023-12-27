@@ -2,15 +2,23 @@
 
 namespace Olooeez\AluraPlay\Controller;
 
-class LoginFormController extends ControllerWithHtml implements Controller
+use Nyholm\Psr7\Response;
+use Olooeez\AluraPlay\Helper\HtmlRendererTrait;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
+class LoginFormController implements Controller
 {
-  public function indexAction(): void
+  use HtmlRendererTrait;
+
+  public function indexAction(ServerRequestInterface $request): ResponseInterface
   {
     if (array_key_exists("logged", $_SESSION) && $_SESSION["logged"]) {
-      header("Location: /");
-      return;
+      return new Response(200, [
+        "Location" => "/"
+      ]);
     }
 
-    echo $this->renderTemplate("login-form");
+    return new Response(401, [], $this->renderTemplate("login-form"));
   }
 }
