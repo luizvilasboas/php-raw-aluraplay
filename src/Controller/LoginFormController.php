@@ -2,7 +2,7 @@
 
 namespace Olooeez\AluraPlay\Controller;
 
-class LoginFormController implements Controller
+class LoginFormController extends ControllerWithHtml implements Controller
 {
   public function indexAction(): void
   {
@@ -11,6 +11,6 @@ class LoginFormController implements Controller
       return;
     }
 
-    require_once(__DIR__ . "/../../views/login-form.php");
+    echo $this->renderTemplate("login-form");
   }
 }

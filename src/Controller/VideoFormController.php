@@ -5,7 +5,7 @@ namespace Olooeez\AluraPlay\Controller;
 use Olooeez\AluraPlay\Repository\VideoRepository;
 use Olooeez\AluraPlay\Entity\Video;
 
-class VideoFormController implements Controller
+class VideoFormController extends ControllerWithHtml implements Controller
 {
   private VideoRepository $videoRepository;
 
@@ -23,6 +23,6 @@ class VideoFormController implements Controller
       $video = $this->videoRepository->find($id);
     }
   
-    require_once(__DIR__ . "/../../views/video-form.php");
+    echo $this->renderTemplate("video-list", ["video" => $video]);
   }
 }

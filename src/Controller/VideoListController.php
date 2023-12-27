@@ -5,7 +5,7 @@ namespace Olooeez\AluraPlay\Controller;
 use Olooeez\AluraPlay\Repository\VideoRepository;
 use PDO;
 
-class VideoListController implements Controller
+class VideoListController extends ControllerWithHtml implements Controller
 {
   private VideoRepository $videoRepository;
 
@@ -17,6 +17,6 @@ class VideoListController implements Controller
   public function indexAction(): void
   {
     $videoList = $this->videoRepository->all();
-    require_once(__DIR__ . "/../../views/video-list.php");
+    echo $this->renderTemplate("video-list", ["videoList" => $videoList]);
   }
 }
