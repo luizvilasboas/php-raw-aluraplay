@@ -4,6 +4,7 @@ namespace Olooeez\AluraPlay\Controller;
 
 use Nyholm\Psr7\Response;
 use Olooeez\AluraPlay\Helper\FlashMessageTrait;
+use Olooeez\AluraPlay\Repository\UserRepository;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use PDO;
@@ -13,12 +14,11 @@ class LoginController implements RequestHandlerInterface
 {
   use FlashMessageTrait;
 
-  private PDO $pdo;
+  private UserRepository $userRepository;
 
-  public function __construct()
+  public function __construct(UserRepository $userRepository)
   {
-    $dbPath = __DIR__ . "/../../banco.sqlite";
-    $this->pdo = new PDO("sqlite:$dbPath");
+    $this->userRepository = $userRepository; 
   }
 
   public function handle(ServerRequestInterface $request): ResponseInterface
@@ -27,13 +27,9 @@ class LoginController implements RequestHandlerInterface
     $email = filter_var($requestBody["email"], FILTER_VALIDATE_EMAIL);
     $password = $requestBody["password"];
 
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->bindValue(1, $email);
-    $stmt->execute();
+    $user = $this->userRepository->findByEmail($email);
 
-    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-    $correctPassword = password_verify($password, $userData["password"] ?? "");
+    $correctPassword = password_verify($password, $user->getPassword() ?? "");
 
     if ($correctPassword) {
       $_SESSION["logged"] = true;
