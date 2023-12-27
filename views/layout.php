@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/css/estilos-form.css">
   <link rel="stylesheet" href="/css/flexbox.css">
   <title>AluraPlay</title>
-  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -24,7 +24,13 @@
       </div>
     </nav>
   </header>
-  <?php if (isset($_SESSION["error_message"])) : ?>
-    <h2 class="formulario__titulo erro"><?= $_SESSION["error_message"] ?? "" ?></h2>
-    <?php unset($_SESSION["error_message"]); ?>
+  <?php if (isset($_SESSION['error_message'])) : ?>
+    <h2 class="formulario__titulo erro">
+      <?= $_SESSION['error_message']; ?>
+      <?php unset($_SESSION['error_message']); ?>
+    </h2>
   <?php endif; ?>
+  <?= $this->section('content'); ?>
+</body>
+
+</html>

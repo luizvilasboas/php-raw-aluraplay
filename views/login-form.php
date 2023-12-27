@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . "/html-begin.php"; ?>
+<?php $this->layout('layout'); ?>
 <main class="container">
   <form class="container__formulario" method="post">
     <h2 class="formulario__titulo">Efetue login</h2>
@@ -13,4 +13,3 @@
     <input class="formulario__botao" type="submit" value="Entrar" />
   </form>
 </main>
-<?php require_once __DIR__ . "/html-end.php"; ?>

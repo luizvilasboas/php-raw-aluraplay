@@ -1,4 +1,4 @@
-<?php require_once(__DIR__ . "/html-begin.php"); ?>
+<?php $this->layout('layout'); ?>
 <ul class="videos__container">
   <?php foreach ($videoList as $video) : ?>
     <li class="videos__item">
@@ -19,4 +19,3 @@
     </li>
   <?php endforeach; ?>
 </ul>
-<?php require_once(__DIR__ . "/html-end.php"); ?>

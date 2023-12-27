@@ -1,4 +1,4 @@
-<?php require_once(__DIR__ . "/html-begin.php") ?>
+<?php $this->layout('layout'); ?>
 <main class="container">
   <form class="container__formulario" method="post" enctype="multipart/form-data">
     <h2 class="formulario__titulo">Envie um vídeo!</h2>
@@ -17,4 +17,3 @@
     <input class="formulario__botao" type="submit" value="Enviar" />
   </form>
 </main>
-<?php require_once(__DIR__ . "/html-end.php"); ?>
