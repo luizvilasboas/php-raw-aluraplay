@@ -5,10 +5,11 @@ namespace Olooeez\AluraPlay\Controller;
 use Nyholm\Psr7\Response;
 use Olooeez\AluraPlay\Helper\HtmlRendererTrait;
 use Olooeez\AluraPlay\Repository\VideoRepository;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class VideoFormController implements Controller
+class VideoFormController implements RequestHandlerInterface
 {
   use HtmlRendererTrait;
 
@@ -19,15 +20,16 @@ class VideoFormController implements Controller
     $this->videoRepository = $videoRepository;
   }
 
-  public function indexAction(RequestInterface $request): ResponseInterface
+  public function handle(ServerRequestInterface $request): ResponseInterface
   {
-    $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+    $queryParams = $request->getQueryParams();
+    $id = filter_var($queryParams["id"], FILTER_VALIDATE_INT);
     $video = null;
 
     if ($id !== false && $id !== null) {
       $video = $this->videoRepository->find($id);
     }
   
-    return new Response(200, [], $this->renderTemplate("video-list", ["video" => $video]));
+    return new Response(200, [], $this->renderTemplate("video-form", ["video" => $video]));
   }
 }

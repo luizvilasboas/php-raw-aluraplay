@@ -2,18 +2,18 @@
 
 namespace Olooeez\AluraPlay\Controller;
 
+use finfo;
 use Nyholm\Psr7\Response;
 use Olooeez\AluraPlay\Helper\FlashMessageTrait;
-use Olooeez\AluraPlay\Helper\HtmlRendererTrait;
 use Olooeez\AluraPlay\Repository\VideoRepository;
 use Olooeez\AluraPlay\Entity\Video;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class NewVideoController implements Controller
+class NewVideoController implements RequestHandlerInterface
 {
   use FlashMessageTrait;
-  use HtmlRendererTrait;
 
   private VideoRepository $videoRepository;
 
@@ -22,9 +22,10 @@ class NewVideoController implements Controller
     $this->videoRepository = $videoRepository;
   }
 
-  public function indexAction(RequestInterface $request): ResponseInterface
+  public function handle(ServerRequestInterface $request): ResponseInterface
   {
-    $url = filter_input(INPUT_POST, "url", FILTER_VALIDATE_URL);
+    $requestBody = $request->getParsedBody();
+    $url = filter_var($requestBody["url"], FILTER_VALIDATE_URL);
     if ($url === false) {
       $this->addErrorMessage("URL inválida");
       return new Response(302, [
@@ -32,7 +33,7 @@ class NewVideoController implements Controller
       ]);
     }
 
-    $titulo = filter_input(INPUT_POST, "titulo");
+    $titulo = filter_var($requestBody["titulo"]);
     if ($titulo === false) {
       $this->addErrorMessage("Título inválido");
       return new Response(302, [
@@ -41,13 +42,21 @@ class NewVideoController implements Controller
     }
 
     $video = new Video($url, $titulo);
-    if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
-      $new_file_name = uniqid("upload_") . $_FILES["image"]["name"];
-      move_uploaded_file($_FILES["image"]["tmp_name"], __DIR__ . "/../../public/img/uploads/" . $new_file_name);
-      $video->setFilePath($new_file_name);
+    $files = $request->getUploadedFiles();
+    $uploadedImage = $files["image"];
+    if ($uploadedImage->getError() === UPLOAD_ERR_OK) {
+      $finfo = new finfo(FILEINFO_MIME_TYPE);
+      $tmpFile = $uploadedImage->getStream()->getMetadata("uri");
+      $mimeType = $finfo->file($tmpFile);
+
+      if (str_starts_with($mimeType, "image/")) {
+        $safeFileName = uniqid("upload_") . "_" . pathinfo($uploadedImage->getClientFilename(), PATHINFO_BASENAME);
+        $uploadedImage->moveTo(__DIR__ . "/../../public/img/uploads/" . $safeFileName);
+        $video->setFilePath($safeFileName);
+      }
     }
 
-    if (!$this->videoRepository->add(new Video($url, $titulo))) {
+    if (!$this->videoRepository->add($video)) {
       $this->addErrorMessage("Falha ao adicionar vídeo");
       return new Response(302, [
         "Location" => "/novo-video"

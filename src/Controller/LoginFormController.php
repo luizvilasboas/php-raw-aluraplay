@@ -6,12 +6,13 @@ use Nyholm\Psr7\Response;
 use Olooeez\AluraPlay\Helper\HtmlRendererTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class LoginFormController implements Controller
+class LoginFormController implements RequestHandlerInterface
 {
   use HtmlRendererTrait;
 
-  public function indexAction(ServerRequestInterface $request): ResponseInterface
+  public function handle(ServerRequestInterface $request): ResponseInterface
   {
     if (array_key_exists("logged", $_SESSION) && $_SESSION["logged"]) {
       return new Response(200, [

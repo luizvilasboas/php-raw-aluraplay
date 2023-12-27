@@ -5,10 +5,11 @@ namespace Olooeez\AluraPlay\Controller;
 use Nyholm\Psr7\Response;
 use Olooeez\AluraPlay\Helper\HtmlRendererTrait;
 use Olooeez\AluraPlay\Repository\VideoRepository;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class VideoListController implements Controller
+class VideoListController implements RequestHandlerInterface
 {
   use HtmlRendererTrait;
 
@@ -19,7 +20,7 @@ class VideoListController implements Controller
     $this->videoRepository = $videoRepository;
   }
 
-  public function indexAction(RequestInterface $request): ResponseInterface
+  public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $videoList = $this->videoRepository->all();
     return new Response(200, [], $this->renderTemplate("video-list", ["videoList" => $videoList]));
