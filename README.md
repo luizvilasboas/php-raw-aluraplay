@@ -1,4 +1,4 @@
-# AluraPlay
+# php-raw-aluraplay
 
 This project was developed during the PHP Web Development training on the Alura platform. It utilized PHP with the following specifications:
 
@@ -15,8 +15,8 @@ This project was developed during the PHP Web Development training on the Alura 
 
 1. **Clone the Repository:**
    ```
-   git clone https://gitlab.com/alura-courses-code/php/aluraplay.git
-   cd aluraplay
+   git clone https://gitlab.com/alura-courses-code/php/php-raw-aluraplay.git
+   cd php-raw-aluraplay
    ```
 
 2. **Install Dependencies:**
@@ -41,4 +41,4 @@ If you're interested in contributing to this project, feel free to open a merge 
 
 ## License
 
-This project is licensed under the [MIT License](https://gitlab.com/alura-courses-code/php/aluraplay/-/blob/main/LICENSE). Refer to the LICENSE file for more details.
+This project is licensed under the [MIT License](https://gitlab.com/alura-courses-code/php/php-raw-aluraplay/-/blob/main/LICENSE). Refer to the LICENSE file for more details.
